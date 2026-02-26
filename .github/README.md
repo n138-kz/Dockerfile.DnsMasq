@@ -55,7 +55,9 @@ yes | docker container prune; docker run -itd -v $(pwd)/config:/etc/dnsmasq.d/ -
 docker exec -it dnsmasq bash
 ```
 
-```conf:99-custom-template.conf
+99-custom-template.conf
+
+```conf
 address=/gw1/192.168.0.2
 ptr-record=2.0.168.192.in-addr.arpa,gw1
 address=/gw2/192.168.0.3
