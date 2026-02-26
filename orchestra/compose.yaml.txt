@@ -1,0 +1,19 @@
+name: dnsmasq
+services:
+    engine:
+        build:
+            context: build@engine
+            dockerfile: Dockerfile
+        volumes:
+            - type: bind
+              source: config
+              target: /etc/dnsmasq.d/
+              read_only: true
+        restart: on-failure
+        ports:
+            - "${LISTEN_ADDRESS_V4:-127.0.0.1}:53:53/udp"
+            - "${LISTEN_ADDRESS_V4:-127.0.0.1}:53:53"
+            - "${LISTEN_ADDRESS_V6:-::1}:53:53/udp"
+            - "${LISTEN_ADDRESS_V6:-::1}:53:53"
+        command:
+            - "dnsmasq -k"
