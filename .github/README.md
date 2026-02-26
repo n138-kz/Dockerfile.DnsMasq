@@ -48,7 +48,7 @@ docker build --no-cache -t test$(date +%Y%m%d):$(date +%H%M%S) -t test$(date +%Y
 ---
 
 ```sh
-yes | docker container prune; docker run -itd -v $(pwd)/config:/etc/dnsmasq.d/ -w /var/tmp -p 127.0.0.1:53:53/udp -p 127.0.0.1:53:53/tcp --name dnsmasq test$(date +%Y%m%d)
+yes|docker container prune; docker run -itd -v $(pwd)/config:/etc/dnsmasq.d/ -w /var/tmp -p 127.0.0.1:53:53/udp -p 127.0.0.1:53:53/tcp --name dnsmasq test$(date +%Y%m%d)
 ```
 
 ```sh
@@ -76,7 +76,7 @@ dig @127.0.0.1 -x 192.168.0.5
 ---
 
 ```sh
-docker kill dnsmasq; yes | docker container prune
+docker kill dnsmasq; yes|docker container prune
 ```
 
 
