@@ -1,0 +1,13 @@
+name: dnsmasq
+services:
+        dns-engine:
+                image: ubuntu
+                volumes:
+                        - type: bind
+                          source: config
+                          target: /media/dnsmasq
+                          read_only: true
+                restart: on-failure
+                ports:
+                        - "53:53/udp"
+                        - "53:53"
