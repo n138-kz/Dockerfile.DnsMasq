@@ -37,6 +37,45 @@
 
 </div>
 
+./Dockerfile.DnsMasq/orchestra
+
+```sh
+docker build --no-cache -t test$(date +%Y%m%d):$(date +%H%M%S) -t test$(date +%Y%m%d) build@engine/
+```
+
+---
+
+```sh
+yes | docker container prune; docker run -itd -v $(pwd)/config:/etc/dnsmasq.d/ -w /var/tmp -p 127.0.0.1:53:53/udp -p 127.0.0.1:53:53/tcp --name dnsmasq test$(date +%Y%m%d)
+```
+
+```sh
+docker exec -it dnsmasq bash
+```
+
+```conf:99-custom-template.conf
+address=/gw1/192.168.0.2
+ptr-record=2.0.168.192.in-addr.arpa,gw1
+address=/gw2/192.168.0.3
+ptr-record=3.0.168.192.in-addr.arpa,gw2
+host-record=gateway,192.168.0.1
+host-record=dns,192.168.0.4
+host-record=dns,192.168.0.5
+```
+
+```sh
+dig @127.0.0.1 dns
+dig @127.0.0.1 -x 192.168.0.4
+dig @127.0.0.1 -x 192.168.0.5
+```
+
+---
+
+```sh
+docker kill dnsmasq; yes | docker container prune
+```
+
+
 ## Refs
 
 - [![](https://www.google.com/s2/favicons?size=64&domain=https://github.com)Dockerfile.DnsMasq](https://github.com/n138-kz/Dockerfile.DnsMasq/)
