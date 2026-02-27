@@ -42,6 +42,6 @@ jobs:
     - run: docker exec dnsmasq bash -c "dnsmasq --test"
     - run: docker exec dnsmasq bash -c "ls -l /etc/dnsmasq.d/"
     - name: "Test lookup: IN A"
-      run: dig @127.0.0.1 host1 IN A
+      run: dig @127.0.0.1 host1 IN A +short
     - name: "Test lookup: IN PTR"
-      run: dig @127.0.0.1 -x 192.168.0.1 IN PTR
+      run: dig @127.0.0.1 -x 192.168.0.1 IN PTR +short
