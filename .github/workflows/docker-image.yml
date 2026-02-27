@@ -1,0 +1,51 @@
+name: Test Docker Image
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Create the Test Conf
+      working-directory: orchestra/
+      run: |
+        mkdir config; cat << EOF >> config/99-sample.conf
+        host-record=host1,192.168.0.1
+        EOF
+    - name: Build the Docker image
+      working-directory: orchestra/build@engine/
+      run: |
+        docker build . \
+          --no-cache \
+          --tag test$(date +%Y%m%d):$(date +%H%M%S) \
+          --tag test$(date +%Y%m%d)
+    - name: Start the container
+      working-directory: orchestra/
+      run: |
+        docker run \
+          -itd \
+          -v $(pwd)/config:/etc/dnsmasq.d/ \
+          -w /var/tmp \
+          -p 127.0.0.1:53:53/udp \
+          -p 127.0.0.1:53:53/tcp \
+          --name dnsmasq \
+          test$(date +%Y%m%d)
+    - run: docker ps
+    - run: tree
+      working-directory: orchestra/
+    - name: dnsmasq --test
+      run: docker exec dnsmasq bash -c "dnsmasq --test"
+    - name: ls -l /etc/dnsmasq.d/
+      run: docker exec dnsmasq bash -c "ls -l /etc/dnsmasq.d/"
+    - name: find /etc/dnsmasq.d/ -type f -name '*.conf' -exec nl -ba {} \;
+      run: docker exec dnsmasq bash -c "find /etc/dnsmasq.d/ -type f -name '*.conf' -exec nl -ba {} \;"
+    - name: "Test lookup: IN A"
+      run: dig @127.0.0.1 host1 IN A
+    - name: "Test lookup: IN PTR"
+      run: dig @127.0.0.1 -x 192.168.0.1 IN PTR
