@@ -36,6 +36,8 @@ jobs:
           --name dnsmasq \
           test$(date +%Y%m%d)
     - run: docker ps
+    - run: tree
+      working-directory: orchestra/
     - run: docker exec dnsmasq bash -c "dnsmasq --test"
     - run: docker exec dnsmasq bash -c "ls -l /etc/dnsmasq.d/"
     - name: Test lookup
