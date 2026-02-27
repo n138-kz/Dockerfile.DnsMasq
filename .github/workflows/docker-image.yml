@@ -20,7 +20,8 @@ jobs:
           --tag test$(date +%Y%m%d):$(date +%H%M%S) \
           --tag test$(date +%Y%m%d)
     - name: Start the container
-      run: docker run \
+      run: |
+        docker run \
           -itd \
           -v $(pwd)/config:/etc/dnsmasq.d/ \
           -w /var/tmp \
