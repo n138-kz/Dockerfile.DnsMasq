@@ -28,3 +28,5 @@ jobs:
           -p 127.0.0.1:53:53/tcp \
           --name dnsmasq \
           test$(date +%Y%m%d)
+    - name: Test lookup
+      run: dig @127.0.0.1 host1 IN A
