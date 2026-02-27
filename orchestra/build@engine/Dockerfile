@@ -7,7 +7,7 @@ RUN apt-get update \
 	apt-get install -y dnsmasq dnsutils
 
 RUN cp -f /etc/dnsmasq.conf /etc/dnsmasq.original.txt
-RUN grep -v -E '(^[#;]|^$)' /etc/dnsmasq.original.txt /etc/dnsmasq.conf
+RUN grep -v -E '(^[#;]|^$)' /etc/dnsmasq.original.txt | tee /etc/dnsmasq.conf
 
 RUN echo 'conf-dir=/etc/dnsmasq.d/,*.conf' >> /etc/dnsmasq.conf
 
