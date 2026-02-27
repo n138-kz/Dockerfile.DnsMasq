@@ -12,6 +12,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Create the Test Conf
+      run: |
+        cat << EOF >> orchestra/config/99-sample.conf
+        host-record=host1,192.168.0.1
+        EOF
     - name: Build the Docker image
       working-directory: orchestra/build@engine/
       run: |
@@ -31,3 +36,5 @@ jobs:
           test$(date +%Y%m%d)
     - name: Test lookup
       run: dig @127.0.0.1 host1 IN A
+    - name: Test lookup
+      run: dig @127.0.0.1 -x 192.168.0.1 IN PTR
