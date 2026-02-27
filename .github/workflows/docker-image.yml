@@ -37,6 +37,7 @@ jobs:
           test$(date +%Y%m%d)
     - run: docker ps
     - run: docker exec dnsmasq bash -c "dnsmasq --test"
+    - run: docker exec dnsmasq bash -c "ls -l /etc/dnsmasq.d/"
     - name: Test lookup
       run: dig @127.0.0.1 host1 IN A
     - name: Test lookup
