@@ -1,0 +1,21 @@
+name: Test Docker Image
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      working-directory: orchestra/build@engine/
+      run: |
+        docker build . \
+          --no-cache \
+          --tag test$(date +%Y%m%d):$(date +%H%M%S) \
+          --tag test$(date +%Y%m%d)
