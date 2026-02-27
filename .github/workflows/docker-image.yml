@@ -39,8 +39,10 @@ jobs:
     - run: docker ps
     - run: tree
       working-directory: orchestra/
-    - run: docker exec dnsmasq bash -c "dnsmasq --test"
-    - run: docker exec dnsmasq bash -c "ls -l /etc/dnsmasq.d/"
+    - name: dnsmasq --test
+      run: docker exec dnsmasq bash -c "dnsmasq --test"
+    - name: ls -l /etc/dnsmasq.d/
+      run: docker exec dnsmasq bash -c "ls -l /etc/dnsmasq.d/"
     - name: "Test lookup: IN A"
       run: dig @127.0.0.1 host1 IN A
     - name: "Test lookup: IN PTR"
