@@ -13,8 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Create the Test Conf
+      working-directory: orchestra/
       run: |
-        cat << EOF >> orchestra/config/99-sample.conf
+        mkdir config; cat << EOF >> config/99-sample.conf
         host-record=host1,192.168.0.1
         EOF
     - name: Build the Docker image
