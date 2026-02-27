@@ -19,3 +19,12 @@ jobs:
           --no-cache \
           --tag test$(date +%Y%m%d):$(date +%H%M%S) \
           --tag test$(date +%Y%m%d)
+    - name: Start the container
+      run: docker run \
+          -itd \
+          -v $(pwd)/config:/etc/dnsmasq.d/ \
+          -w /var/tmp \
+          -p 127.0.0.1:53:53/udp \
+          -p 127.0.0.1:53:53/tcp \
+          --name dnsmasq \
+          test$(date +%Y%m%d)
