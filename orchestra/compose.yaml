@@ -25,3 +25,6 @@ services:
       - "${LISTEN_ADDRESS_V4_3:-127.0.0.1}:53:53/tcp"
       - "${LISTEN_ADDRESS_V6_3:-::1}:53:53/udp"
       - "${LISTEN_ADDRESS_V6_3:-::1}:53:53/tcp"
+networks:
+  default:
+    enable_ipv6: true
