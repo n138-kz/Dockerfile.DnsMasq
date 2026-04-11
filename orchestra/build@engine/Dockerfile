@@ -14,4 +14,4 @@ RUN echo 'conf-dir=/etc/dnsmasq.d/,*.conf' >> /etc/dnsmasq.conf
 EXPOSE 53/tcp
 EXPOSE 53/udp
 
-CMD ["dnsmasq","-k"]
+CMD ["dnsmasq", "-k", "-d"]
