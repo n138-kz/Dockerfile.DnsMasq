@@ -1,0 +1,27 @@
+services:
+  engine:
+    build:
+      context: build@engine
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: config
+        target: /etc/dnsmasq.d/
+        read_only: true
+    working_dir: /var/tmp
+    restart: on-failure
+    ports:
+      - "127.0.0.1:53:53/udp"
+      - "127.0.0.1:53:53/tcp"
+      - "${LISTEN_ADDRESS_V4_1:-127.0.0.1}:53:53/udp"
+      - "${LISTEN_ADDRESS_V4_1:-127.0.0.1}:53:53/tcp"
+      - "${LISTEN_ADDRESS_V6_1:-::1}:53:53/udp"
+      - "${LISTEN_ADDRESS_V6_1:-::1}:53:53/tcp"
+      - "${LISTEN_ADDRESS_V4_2:-127.0.0.1}:53:53/udp"
+      - "${LISTEN_ADDRESS_V4_2:-127.0.0.1}:53:53/tcp"
+      - "${LISTEN_ADDRESS_V6_2:-::1}:53:53/udp"
+      - "${LISTEN_ADDRESS_V6_2:-::1}:53:53/tcp"
+      - "${LISTEN_ADDRESS_V4_3:-127.0.0.1}:53:53/udp"
+      - "${LISTEN_ADDRESS_V4_3:-127.0.0.1}:53:53/tcp"
+      - "${LISTEN_ADDRESS_V6_3:-::1}:53:53/udp"
+      - "${LISTEN_ADDRESS_V6_3:-::1}:53:53/tcp"
